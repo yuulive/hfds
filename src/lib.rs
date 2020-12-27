@@ -50,6 +50,8 @@ use proc_macro::TokenStream;
 pub fn wrap(_meta: TokenStream, input: TokenStream) -> TokenStream {
   // parse the input stream into our async function
   let func = syn::parse_macro_input!(input as syn::ItemFn);
+  // get attributes (docstrings/examples) for our function
+  let attrs = &func.attrs;
   // get visibility of function
   let vis = &func.vis;
   // get the name of our function
@@ -62,6 +64,9 @@ pub fn wrap(_meta: TokenStream, input: TokenStream) -> TokenStream {
   let block = &func.block;
   // cast back to a token stream
   let output = quote!{
+    // iterate and add all of our attributes
+    #(#attrs)*
+    // conditionally add tokio::main if the sync feature is enabled
     #[cfg_attr(feature = "sync", tokio::main)]
     #vis async fn #name(#args) #output { #block }
   };
