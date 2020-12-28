@@ -26,7 +26,7 @@
 //! ```
 //!
 //! Currently the wrapping is very naive and simply wraps the function in
-//! tokio::main. This is likey more expensive then it needs to be and I hope
+//! tokio::main. This is likely more expensive then it needs to be and I hope
 //! to make it more efficient later.
 
 use syn;
@@ -56,6 +56,8 @@ pub fn wrap(_meta: TokenStream, input: TokenStream) -> TokenStream {
   let vis = &func.vis;
   // get the name of our function
   let name = &func.sig.ident;
+  // get information on the generics to pass
+  let generics = &func.sig.generics;
   // get the arguments for our function
   let args = &func.sig.inputs;
   // get our output
@@ -68,7 +70,7 @@ pub fn wrap(_meta: TokenStream, input: TokenStream) -> TokenStream {
     #(#attrs)*
     // conditionally add tokio::main if the sync feature is enabled
     #[cfg_attr(feature = "sync", tokio::main)]
-    #vis async fn #name(#args) #output { #block }
+    #vis async fn #name #generics(#args) #output { #block }
   };
   output.into()
 }

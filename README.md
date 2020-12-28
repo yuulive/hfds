@@ -25,7 +25,7 @@ fn main() {
 ```
 
 Currently the wrapping is very naive and simply wraps the function in
-tokio::main. This is likey more expensive then it needs to be and I hope
+tokio::main. This is likely more expensive then it needs to be and I hope
 to make it more efficient later.
 
 
