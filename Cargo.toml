@@ -1,11 +1,11 @@
 [package]
-name = "syncwrap"
+name = "ut"
 version = "0.3.0"
 authors = ["michael <mcarson898@gmail.com>"]
 edition = "2018"
 license = "MIT"
-description = "Automatically wraps async functions in a synchronous wrapper based on feature flags"
-repository = "https://github.com/mjcarson/syncwrap.git"
+description = "UT automatically wraps async functions in a synchronous wrapper based on feature flags"
+repository = "https://github.com/yuulive/ut.git"
 readme = "README.md"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html

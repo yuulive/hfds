@@ -1,4 +1,4 @@
-//! # Syncwrap
+//! # Ut
 //!
 //! Wraps asynchronous functions in order to make them synchronous based on if a
 //! "sync" feature is enabled. This is useful when writting http clients as you
@@ -8,11 +8,11 @@
 //! # Usage
 //! ```toml
 //! [dependencies]
-//! syncwrap = "0.2.0"
+//! ut = "0.2.0"
 //! ```
 //!
 //! Then in the crate that you want to have synchronous functions created for you
-//! you create a sync feature. When this feature is enabled syncwrap will create
+//! you create a sync feature. When this feature is enabled ut will create
 //! synchronous functions on what you have wrapped.
 //!
 //! you can either: 
@@ -27,7 +27,7 @@
 //!
 //!
 //! ```rust
-//! #[syncwrap::wrap]
+//! #[ut::wrap]
 //! async fn foo(input: &str) -> String {
 //!   format!("I am {} now", input)
 //! }
@@ -45,7 +45,7 @@
 //!
 //!
 //! ```
-//! #[syncwrap::clone]
+//! #[ut::clone]
 //! async fn foo(input: &str) -> String {
 //!  format!("I am {} now", input)
 //! }
@@ -57,7 +57,7 @@
 //! # Cloning async methods in implementations
 //!
 //! You can clone all methods in an impl with synchronous ones by using
-//! syncwrap::clone_impl. This is useful when you want to support both
+//! ut::clone_impl. This is useful when you want to support both
 //! async and sync functions in a struct implementation.
 //!
 //!
@@ -87,7 +87,7 @@
 //!
 //! // The async impls that you want to wrap
 //! // All methods within this impl must be async
-//! #[syncwrap::clone_impl]
+//! #[ut::clone_impl]
 //! impl Fooers {
 //!   pub async fn foo(&self, input: &str) -> String {
 //!     format!("I am {} now", input)
@@ -117,7 +117,7 @@ use proc_macro::TokenStream;
 /// # Examples
 ///
 /// ```
-/// #[syncwrap::wrap]
+/// #[ut::wrap]
 /// async fn foo(input: &str) -> String {
 ///  format!("I am {} now", input)
 /// }
@@ -161,7 +161,7 @@ pub fn wrap(_meta: TokenStream, input: TokenStream) -> TokenStream {
 /// # Examples
 ///
 /// ```
-/// #[syncwrap::clone]
+/// #[ut::clone]
 /// async fn foo(input: &str) -> String {
 ///  format!("I am {} now", input)
 /// }
@@ -230,7 +230,7 @@ pub fn clone(_meta: TokenStream, input: TokenStream) -> TokenStream {
 /// #[derive(Default)]
 /// pub struct FooersBlocking;
 ///
-/// #[syncwrap::clone_impl]
+/// #[ut::clone_impl]
 /// impl Fooers {
 ///   pub async fn foo(&self, input: &str) -> String {
 ///     format!("I am {} now", input)
@@ -271,7 +271,7 @@ pub fn clone_impl(_meta: TokenStream, input: TokenStream) -> TokenStream {
     impl #sync_name {
       // wrap them to make the synchronous
       #(
-        #[syncwrap::wrap]
+        #[ut::wrap]
         #items
       )*
     }  

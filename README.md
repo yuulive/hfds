@@ -1,4 +1,4 @@
-# Syncwrap
+# Ut
 
 Wraps asynchronous functions in order to make them synchronous based on if a
 "sync" feature is enabled. This is useful when writting http clients as you
@@ -8,11 +8,11 @@ automatically.
 # Usage
 ```toml
 [dependencies]
-syncwrap = "0.2.0"
+ut = "0.2.0"
 ```
 
 Then in the crate that you want to have synchronous functions created for you
-you create a sync feature. When this feature is enabled syncwrap will create
+you create a sync feature. When this feature is enabled ut will create
 synchronous functions on what you have wrapped.
 
 you can either: 
@@ -27,7 +27,7 @@ something like the following:
 
 
 ```rust
-#[syncwrap::wrap]
+#[ut::wrap]
 async fn foo(input: &str) -> String {
   format!("I am {} now", input)
 }
@@ -44,7 +44,7 @@ You can clone your asynchronous function with a synchronous one ending in blocki
 by doing something like the following:
 
 ```rust
-#[syncwrap::clone]
+#[ut::clone]
 async fn foo(input: &str) -> String {
  format!("I am {} now", input)
 }
@@ -56,7 +56,7 @@ assert_eq!(out, "I am sync now".to_owned())
 # Cloning async methods in implementations
 
 You can clone all methods in an impl with synchronous ones by using
-syncwrap::clone_impl. This is useful when you want to support both
+ut::clone_impl. This is useful when you want to support both
 async and sync functions in a struct implementation.
 
 
@@ -86,7 +86,7 @@ pub struct FooersBlocking;
 
 // The async impls that you want to wrap
 // All methods within this impl must be async
-#[syncwrap::clone_impl]
+#[ut::clone_impl]
 impl Fooers {
   pub async fn foo(&self, input: &str) -> String {
     format!("I am {} now", input)
